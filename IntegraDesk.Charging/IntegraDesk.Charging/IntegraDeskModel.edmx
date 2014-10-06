@@ -1,0 +1,738 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Integradesk_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_IntDek_cd_alterantivas">
+          <Key>
+            <PropertyRef Name="cod_alternativa" />
+          </Key>
+          <Property Name="cod_alternativa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cod_exercicio" Type="int" />
+          <Property Name="conteudo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="certa" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cap_cursos">
+          <Key>
+            <PropertyRef Name="cod_cap" />
+          </Key>
+          <Property Name="cod_cap" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cod_curso" Type="int" />
+          <Property Name="duracao" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_class_cursos">
+          <Key>
+            <PropertyRef Name="cod_class" />
+          </Key>
+          <Property Name="cod_class" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="obs_mercado" Type="varchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cursos">
+          <Key>
+            <PropertyRef Name="cod_curso" />
+          </Key>
+          <Property Name="cod_curso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="data_criacao" Type="date" Nullable="false" />
+          <Property Name="obs_mercado" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="cod_class" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cursos_andamento">
+          <Key>
+            <PropertyRef Name="cod_cap" />
+            <PropertyRef Name="cod_usuario" />
+            <PropertyRef Name="cod_curso" />
+          </Key>
+          <Property Name="cod_cap" Type="int" Nullable="false" />
+          <Property Name="cod_usuario" Type="int" Nullable="false" />
+          <Property Name="cod_curso" Type="int" Nullable="false" />
+          <Property Name="posicao" Type="bit" Nullable="false" />
+          <Property Name="acertos" Type="int" Nullable="false" />
+          <Property Name="aprovado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cursos_realizados">
+          <Key>
+            <PropertyRef Name="cod_curso" />
+            <PropertyRef Name="cod_usuario" />
+          </Key>
+          <Property Name="cod_curso" Type="int" Nullable="false" />
+          <Property Name="cod_usuario" Type="int" Nullable="false" />
+          <Property Name="data_inicio" Type="date" Nullable="false" />
+          <Property Name="data_fim" Type="date" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_exercicios">
+          <Key>
+            <PropertyRef Name="cod_exercicio" />
+          </Key>
+          <Property Name="cod_exercicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cod_cap" Type="int" />
+          <Property Name="pergunta" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pergunta_chave" Type="bit" Nullable="false" />
+          <Property Name="img" Type="image" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_topicos">
+          <Key>
+            <PropertyRef Name="cod_topico" />
+          </Key>
+          <Property Name="cod_topico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cod_cap" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="conteudo_principal" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="conteudo_secundario" Type="varchar" MaxLength="1024" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_topicos_img">
+          <Key>
+            <PropertyRef Name="cod_img" />
+          </Key>
+          <Property Name="cod_img" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cod_topico" Type="int" />
+          <Property Name="descricao" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="img" Type="image" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_usuarios">
+          <Key>
+            <PropertyRef Name="cod_usuario" />
+          </Key>
+          <Property Name="cod_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_cd_alterantivas_exercicio">
+          <End Role="tb_IntDek_cd_exercicios" Type="Self.tb_IntDek_cd_exercicios" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_alterantivas" Type="Self.tb_IntDek_cd_alterantivas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_exercicios">
+              <PropertyRef Name="cod_exercicio" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_alterantivas">
+              <PropertyRef Name="cod_exercicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cap_cursos_curso">
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_andamento_cap">
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_andamento" Type="Self.tb_IntDek_cd_cursos_andamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_cap" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_andamento">
+              <PropertyRef Name="cod_cap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_andamento_curso">
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_andamento" Type="Self.tb_IntDek_cd_cursos_andamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_andamento">
+              <PropertyRef Name="cod_curso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_andamento_usuario">
+          <End Role="tb_IntDek_cd_usuarios" Type="Self.tb_IntDek_cd_usuarios" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_andamento" Type="Self.tb_IntDek_cd_cursos_andamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_usuarios">
+              <PropertyRef Name="cod_usuario" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_andamento">
+              <PropertyRef Name="cod_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_class">
+          <End Role="tb_IntDek_cd_class_cursos" Type="Self.tb_IntDek_cd_class_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_class_cursos">
+              <PropertyRef Name="cod_class" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_realizados_curso">
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_realizados" Type="Self.tb_IntDek_cd_cursos_realizados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_realizados">
+              <PropertyRef Name="cod_curso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_realizados_usuario">
+          <End Role="tb_IntDek_cd_usuarios" Type="Self.tb_IntDek_cd_usuarios" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_realizados" Type="Self.tb_IntDek_cd_cursos_realizados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_usuarios">
+              <PropertyRef Name="cod_usuario" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_realizados">
+              <PropertyRef Name="cod_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_exercicios_cap">
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_exercicios" Type="Self.tb_IntDek_cd_exercicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_cap" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_exercicios">
+              <PropertyRef Name="cod_cap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_topicos_cap">
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_topicos" Type="Self.tb_IntDek_cd_topicos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_cap" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_topicos">
+              <PropertyRef Name="cod_cap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_topicos_img_topico">
+          <End Role="tb_IntDek_cd_topicos" Type="Self.tb_IntDek_cd_topicos" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_topicos_img" Type="Self.tb_IntDek_cd_topicos_img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_topicos">
+              <PropertyRef Name="cod_topico" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_topicos_img">
+              <PropertyRef Name="cod_topico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Integradesk_dbModelStoreContainer">
+          <EntitySet Name="tb_IntDek_cd_alterantivas" EntityType="Self.tb_IntDek_cd_alterantivas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_cap_cursos" EntityType="Self.tb_IntDek_cd_cap_cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_class_cursos" EntityType="Self.tb_IntDek_cd_class_cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_cursos" EntityType="Self.tb_IntDek_cd_cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_cursos_andamento" EntityType="Self.tb_IntDek_cd_cursos_andamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_cursos_realizados" EntityType="Self.tb_IntDek_cd_cursos_realizados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_exercicios" EntityType="Self.tb_IntDek_cd_exercicios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_topicos" EntityType="Self.tb_IntDek_cd_topicos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_topicos_img" EntityType="Self.tb_IntDek_cd_topicos_img" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_IntDek_cd_usuarios" EntityType="Self.tb_IntDek_cd_usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cd_alterantivas_exercicio" Association="Self.fk_cd_alterantivas_exercicio">
+            <End Role="tb_IntDek_cd_exercicios" EntitySet="tb_IntDek_cd_exercicios" />
+            <End Role="tb_IntDek_cd_alterantivas" EntitySet="tb_IntDek_cd_alterantivas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cap_cursos_curso" Association="Self.fk_cd_cap_cursos_curso">
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_andamento_cap" Association="Self.fk_cd_cursos_andamento_cap">
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+            <End Role="tb_IntDek_cd_cursos_andamento" EntitySet="tb_IntDek_cd_cursos_andamento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_andamento_curso" Association="Self.fk_cd_cursos_andamento_curso">
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+            <End Role="tb_IntDek_cd_cursos_andamento" EntitySet="tb_IntDek_cd_cursos_andamento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_andamento_usuario" Association="Self.fk_cd_cursos_andamento_usuario">
+            <End Role="tb_IntDek_cd_usuarios" EntitySet="tb_IntDek_cd_usuarios" />
+            <End Role="tb_IntDek_cd_cursos_andamento" EntitySet="tb_IntDek_cd_cursos_andamento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_class" Association="Self.fk_cd_cursos_class">
+            <End Role="tb_IntDek_cd_class_cursos" EntitySet="tb_IntDek_cd_class_cursos" />
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_realizados_curso" Association="Self.fk_cd_cursos_realizados_curso">
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+            <End Role="tb_IntDek_cd_cursos_realizados" EntitySet="tb_IntDek_cd_cursos_realizados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_realizados_usuario" Association="Self.fk_cd_cursos_realizados_usuario">
+            <End Role="tb_IntDek_cd_usuarios" EntitySet="tb_IntDek_cd_usuarios" />
+            <End Role="tb_IntDek_cd_cursos_realizados" EntitySet="tb_IntDek_cd_cursos_realizados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_exercicios_cap" Association="Self.fk_cd_exercicios_cap">
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+            <End Role="tb_IntDek_cd_exercicios" EntitySet="tb_IntDek_cd_exercicios" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_topicos_cap" Association="Self.fk_cd_topicos_cap">
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+            <End Role="tb_IntDek_cd_topicos" EntitySet="tb_IntDek_cd_topicos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_topicos_img_topico" Association="Self.fk_cd_topicos_img_topico">
+            <End Role="tb_IntDek_cd_topicos" EntitySet="tb_IntDek_cd_topicos" />
+            <End Role="tb_IntDek_cd_topicos_img" EntitySet="tb_IntDek_cd_topicos_img" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Integradesk_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_IntDek_cd_alterantivas">
+          <Key>
+            <PropertyRef Name="cod_alternativa" />
+          </Key>
+          <Property Name="cod_alternativa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cod_exercicio" Type="Int32" />
+          <Property Name="conteudo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="certa" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_exercicios" Relationship="Self.fk_cd_alterantivas_exercicio" FromRole="tb_IntDek_cd_alterantivas" ToRole="tb_IntDek_cd_exercicios" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cap_cursos">
+          <Key>
+            <PropertyRef Name="cod_cap" />
+          </Key>
+          <Property Name="cod_cap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cod_curso" Type="Int32" />
+          <Property Name="duracao" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos" Relationship="Self.fk_cd_cap_cursos_curso" FromRole="tb_IntDek_cd_cap_cursos" ToRole="tb_IntDek_cd_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos_andamento" Relationship="Self.fk_cd_cursos_andamento_cap" FromRole="tb_IntDek_cd_cap_cursos" ToRole="tb_IntDek_cd_cursos_andamento" />
+          <NavigationProperty Name="tb_IntDek_cd_exercicios" Relationship="Self.fk_cd_exercicios_cap" FromRole="tb_IntDek_cd_cap_cursos" ToRole="tb_IntDek_cd_exercicios" />
+          <NavigationProperty Name="tb_IntDek_cd_topicos" Relationship="Self.fk_cd_topicos_cap" FromRole="tb_IntDek_cd_cap_cursos" ToRole="tb_IntDek_cd_topicos" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_class_cursos">
+          <Key>
+            <PropertyRef Name="cod_class" />
+          </Key>
+          <Property Name="cod_class" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="obs_mercado" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos" Relationship="Self.fk_cd_cursos_class" FromRole="tb_IntDek_cd_class_cursos" ToRole="tb_IntDek_cd_cursos" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cursos">
+          <Key>
+            <PropertyRef Name="cod_curso" />
+          </Key>
+          <Property Name="cod_curso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_criacao" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="obs_mercado" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cod_class" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_cap_cursos" Relationship="Self.fk_cd_cap_cursos_curso" FromRole="tb_IntDek_cd_cursos" ToRole="tb_IntDek_cd_cap_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_class_cursos" Relationship="Self.fk_cd_cursos_class" FromRole="tb_IntDek_cd_cursos" ToRole="tb_IntDek_cd_class_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos_andamento" Relationship="Self.fk_cd_cursos_andamento_curso" FromRole="tb_IntDek_cd_cursos" ToRole="tb_IntDek_cd_cursos_andamento" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos_realizados" Relationship="Self.fk_cd_cursos_realizados_curso" FromRole="tb_IntDek_cd_cursos" ToRole="tb_IntDek_cd_cursos_realizados" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cursos_andamento">
+          <Key>
+            <PropertyRef Name="cod_cap" />
+            <PropertyRef Name="cod_usuario" />
+            <PropertyRef Name="cod_curso" />
+          </Key>
+          <Property Name="cod_cap" Type="Int32" Nullable="false" />
+          <Property Name="cod_usuario" Type="Int32" Nullable="false" />
+          <Property Name="cod_curso" Type="Int32" Nullable="false" />
+          <Property Name="posicao" Type="Boolean" Nullable="false" />
+          <Property Name="acertos" Type="Int32" Nullable="false" />
+          <Property Name="aprovado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_cap_cursos" Relationship="Self.fk_cd_cursos_andamento_cap" FromRole="tb_IntDek_cd_cursos_andamento" ToRole="tb_IntDek_cd_cap_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos" Relationship="Self.fk_cd_cursos_andamento_curso" FromRole="tb_IntDek_cd_cursos_andamento" ToRole="tb_IntDek_cd_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_usuarios" Relationship="Self.fk_cd_cursos_andamento_usuario" FromRole="tb_IntDek_cd_cursos_andamento" ToRole="tb_IntDek_cd_usuarios" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_cursos_realizados">
+          <Key>
+            <PropertyRef Name="cod_curso" />
+            <PropertyRef Name="cod_usuario" />
+          </Key>
+          <Property Name="cod_curso" Type="Int32" Nullable="false" />
+          <Property Name="cod_usuario" Type="Int32" Nullable="false" />
+          <Property Name="data_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="data_fim" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos" Relationship="Self.fk_cd_cursos_realizados_curso" FromRole="tb_IntDek_cd_cursos_realizados" ToRole="tb_IntDek_cd_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_usuarios" Relationship="Self.fk_cd_cursos_realizados_usuario" FromRole="tb_IntDek_cd_cursos_realizados" ToRole="tb_IntDek_cd_usuarios" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_exercicios">
+          <Key>
+            <PropertyRef Name="cod_exercicio" />
+          </Key>
+          <Property Name="cod_exercicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cod_cap" Type="Int32" />
+          <Property Name="pergunta" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pergunta_chave" Type="Boolean" Nullable="false" />
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="tb_IntDek_cd_alterantivas" Relationship="Self.fk_cd_alterantivas_exercicio" FromRole="tb_IntDek_cd_exercicios" ToRole="tb_IntDek_cd_alterantivas" />
+          <NavigationProperty Name="tb_IntDek_cd_cap_cursos" Relationship="Self.fk_cd_exercicios_cap" FromRole="tb_IntDek_cd_exercicios" ToRole="tb_IntDek_cd_cap_cursos" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_topicos">
+          <Key>
+            <PropertyRef Name="cod_topico" />
+          </Key>
+          <Property Name="cod_topico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cod_cap" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conteudo_principal" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conteudo_secundario" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_cap_cursos" Relationship="Self.fk_cd_topicos_cap" FromRole="tb_IntDek_cd_topicos" ToRole="tb_IntDek_cd_cap_cursos" />
+          <NavigationProperty Name="tb_IntDek_cd_topicos_img" Relationship="Self.fk_cd_topicos_img_topico" FromRole="tb_IntDek_cd_topicos" ToRole="tb_IntDek_cd_topicos_img" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_topicos_img">
+          <Key>
+            <PropertyRef Name="cod_img" />
+          </Key>
+          <Property Name="cod_img" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cod_topico" Type="Int32" />
+          <Property Name="descricao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="tb_IntDek_cd_topicos" Relationship="Self.fk_cd_topicos_img_topico" FromRole="tb_IntDek_cd_topicos_img" ToRole="tb_IntDek_cd_topicos" />
+        </EntityType>
+        <EntityType Name="tb_IntDek_cd_usuarios">
+          <Key>
+            <PropertyRef Name="cod_usuario" />
+          </Key>
+          <Property Name="cod_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos_andamento" Relationship="Self.fk_cd_cursos_andamento_usuario" FromRole="tb_IntDek_cd_usuarios" ToRole="tb_IntDek_cd_cursos_andamento" />
+          <NavigationProperty Name="tb_IntDek_cd_cursos_realizados" Relationship="Self.fk_cd_cursos_realizados_usuario" FromRole="tb_IntDek_cd_usuarios" ToRole="tb_IntDek_cd_cursos_realizados" />
+        </EntityType>
+        <Association Name="fk_cd_alterantivas_exercicio">
+          <End Role="tb_IntDek_cd_exercicios" Type="Self.tb_IntDek_cd_exercicios" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_alterantivas" Type="Self.tb_IntDek_cd_alterantivas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_exercicios">
+              <PropertyRef Name="cod_exercicio" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_alterantivas">
+              <PropertyRef Name="cod_exercicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cap_cursos_curso">
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_andamento_cap">
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_andamento" Type="Self.tb_IntDek_cd_cursos_andamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_cap" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_andamento">
+              <PropertyRef Name="cod_cap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_exercicios_cap">
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_exercicios" Type="Self.tb_IntDek_cd_exercicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_cap" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_exercicios">
+              <PropertyRef Name="cod_cap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_topicos_cap">
+          <End Role="tb_IntDek_cd_cap_cursos" Type="Self.tb_IntDek_cd_cap_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_topicos" Type="Self.tb_IntDek_cd_topicos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cap_cursos">
+              <PropertyRef Name="cod_cap" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_topicos">
+              <PropertyRef Name="cod_cap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_class">
+          <End Role="tb_IntDek_cd_class_cursos" Type="Self.tb_IntDek_cd_class_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_class_cursos">
+              <PropertyRef Name="cod_class" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_andamento_curso">
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_andamento" Type="Self.tb_IntDek_cd_cursos_andamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_andamento">
+              <PropertyRef Name="cod_curso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_realizados_curso">
+          <End Role="tb_IntDek_cd_cursos" Type="Self.tb_IntDek_cd_cursos" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_realizados" Type="Self.tb_IntDek_cd_cursos_realizados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_cursos">
+              <PropertyRef Name="cod_curso" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_realizados">
+              <PropertyRef Name="cod_curso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_andamento_usuario">
+          <End Role="tb_IntDek_cd_usuarios" Type="Self.tb_IntDek_cd_usuarios" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_andamento" Type="Self.tb_IntDek_cd_cursos_andamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_usuarios">
+              <PropertyRef Name="cod_usuario" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_andamento">
+              <PropertyRef Name="cod_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_cursos_realizados_usuario">
+          <End Role="tb_IntDek_cd_usuarios" Type="Self.tb_IntDek_cd_usuarios" Multiplicity="1" />
+          <End Role="tb_IntDek_cd_cursos_realizados" Type="Self.tb_IntDek_cd_cursos_realizados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_usuarios">
+              <PropertyRef Name="cod_usuario" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_cursos_realizados">
+              <PropertyRef Name="cod_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cd_topicos_img_topico">
+          <End Role="tb_IntDek_cd_topicos" Type="Self.tb_IntDek_cd_topicos" Multiplicity="0..1" />
+          <End Role="tb_IntDek_cd_topicos_img" Type="Self.tb_IntDek_cd_topicos_img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_IntDek_cd_topicos">
+              <PropertyRef Name="cod_topico" />
+            </Principal>
+            <Dependent Role="tb_IntDek_cd_topicos_img">
+              <PropertyRef Name="cod_topico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Integradesk_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_IntDek_cd_alterantivas" EntityType="Self.tb_IntDek_cd_alterantivas" />
+          <EntitySet Name="tb_IntDek_cd_cap_cursos" EntityType="Self.tb_IntDek_cd_cap_cursos" />
+          <EntitySet Name="tb_IntDek_cd_class_cursos" EntityType="Self.tb_IntDek_cd_class_cursos" />
+          <EntitySet Name="tb_IntDek_cd_cursos" EntityType="Self.tb_IntDek_cd_cursos" />
+          <EntitySet Name="tb_IntDek_cd_cursos_andamento" EntityType="Self.tb_IntDek_cd_cursos_andamento" />
+          <EntitySet Name="tb_IntDek_cd_cursos_realizados" EntityType="Self.tb_IntDek_cd_cursos_realizados" />
+          <EntitySet Name="tb_IntDek_cd_exercicios" EntityType="Self.tb_IntDek_cd_exercicios" />
+          <EntitySet Name="tb_IntDek_cd_topicos" EntityType="Self.tb_IntDek_cd_topicos" />
+          <EntitySet Name="tb_IntDek_cd_topicos_img" EntityType="Self.tb_IntDek_cd_topicos_img" />
+          <EntitySet Name="tb_IntDek_cd_usuarios" EntityType="Self.tb_IntDek_cd_usuarios" />
+          <AssociationSet Name="fk_cd_alterantivas_exercicio" Association="Self.fk_cd_alterantivas_exercicio">
+            <End Role="tb_IntDek_cd_exercicios" EntitySet="tb_IntDek_cd_exercicios" />
+            <End Role="tb_IntDek_cd_alterantivas" EntitySet="tb_IntDek_cd_alterantivas" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cap_cursos_curso" Association="Self.fk_cd_cap_cursos_curso">
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_andamento_cap" Association="Self.fk_cd_cursos_andamento_cap">
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+            <End Role="tb_IntDek_cd_cursos_andamento" EntitySet="tb_IntDek_cd_cursos_andamento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_exercicios_cap" Association="Self.fk_cd_exercicios_cap">
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+            <End Role="tb_IntDek_cd_exercicios" EntitySet="tb_IntDek_cd_exercicios" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_topicos_cap" Association="Self.fk_cd_topicos_cap">
+            <End Role="tb_IntDek_cd_cap_cursos" EntitySet="tb_IntDek_cd_cap_cursos" />
+            <End Role="tb_IntDek_cd_topicos" EntitySet="tb_IntDek_cd_topicos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_class" Association="Self.fk_cd_cursos_class">
+            <End Role="tb_IntDek_cd_class_cursos" EntitySet="tb_IntDek_cd_class_cursos" />
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_andamento_curso" Association="Self.fk_cd_cursos_andamento_curso">
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+            <End Role="tb_IntDek_cd_cursos_andamento" EntitySet="tb_IntDek_cd_cursos_andamento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_realizados_curso" Association="Self.fk_cd_cursos_realizados_curso">
+            <End Role="tb_IntDek_cd_cursos" EntitySet="tb_IntDek_cd_cursos" />
+            <End Role="tb_IntDek_cd_cursos_realizados" EntitySet="tb_IntDek_cd_cursos_realizados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_andamento_usuario" Association="Self.fk_cd_cursos_andamento_usuario">
+            <End Role="tb_IntDek_cd_usuarios" EntitySet="tb_IntDek_cd_usuarios" />
+            <End Role="tb_IntDek_cd_cursos_andamento" EntitySet="tb_IntDek_cd_cursos_andamento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_cursos_realizados_usuario" Association="Self.fk_cd_cursos_realizados_usuario">
+            <End Role="tb_IntDek_cd_usuarios" EntitySet="tb_IntDek_cd_usuarios" />
+            <End Role="tb_IntDek_cd_cursos_realizados" EntitySet="tb_IntDek_cd_cursos_realizados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cd_topicos_img_topico" Association="Self.fk_cd_topicos_img_topico">
+            <End Role="tb_IntDek_cd_topicos" EntitySet="tb_IntDek_cd_topicos" />
+            <End Role="tb_IntDek_cd_topicos_img" EntitySet="tb_IntDek_cd_topicos_img" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Integradesk_dbModelStoreContainer" CdmEntityContainer="Integradesk_dbEntities">
+          <EntitySetMapping Name="tb_IntDek_cd_alterantivas">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_alterantivas">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_alterantivas">
+                <ScalarProperty Name="cod_alternativa" ColumnName="cod_alternativa" />
+                <ScalarProperty Name="cod_exercicio" ColumnName="cod_exercicio" />
+                <ScalarProperty Name="conteudo" ColumnName="conteudo" />
+                <ScalarProperty Name="certa" ColumnName="certa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_cap_cursos">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_cap_cursos">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_cap_cursos">
+                <ScalarProperty Name="cod_cap" ColumnName="cod_cap" />
+                <ScalarProperty Name="cod_curso" ColumnName="cod_curso" />
+                <ScalarProperty Name="duracao" ColumnName="duracao" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_class_cursos">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_class_cursos">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_class_cursos">
+                <ScalarProperty Name="cod_class" ColumnName="cod_class" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="obs_mercado" ColumnName="obs_mercado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_cursos">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_cursos">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_cursos">
+                <ScalarProperty Name="cod_curso" ColumnName="cod_curso" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="data_criacao" ColumnName="data_criacao" />
+                <ScalarProperty Name="obs_mercado" ColumnName="obs_mercado" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="cod_class" ColumnName="cod_class" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_cursos_andamento">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_cursos_andamento">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_cursos_andamento">
+                <ScalarProperty Name="cod_cap" ColumnName="cod_cap" />
+                <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
+                <ScalarProperty Name="cod_curso" ColumnName="cod_curso" />
+                <ScalarProperty Name="posicao" ColumnName="posicao" />
+                <ScalarProperty Name="acertos" ColumnName="acertos" />
+                <ScalarProperty Name="aprovado" ColumnName="aprovado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_cursos_realizados">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_cursos_realizados">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_cursos_realizados">
+                <ScalarProperty Name="cod_curso" ColumnName="cod_curso" />
+                <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
+                <ScalarProperty Name="data_inicio" ColumnName="data_inicio" />
+                <ScalarProperty Name="data_fim" ColumnName="data_fim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_exercicios">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_exercicios">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_exercicios">
+                <ScalarProperty Name="cod_exercicio" ColumnName="cod_exercicio" />
+                <ScalarProperty Name="cod_cap" ColumnName="cod_cap" />
+                <ScalarProperty Name="pergunta" ColumnName="pergunta" />
+                <ScalarProperty Name="pergunta_chave" ColumnName="pergunta_chave" />
+                <ScalarProperty Name="img" ColumnName="img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_topicos">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_topicos">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_topicos">
+                <ScalarProperty Name="cod_topico" ColumnName="cod_topico" />
+                <ScalarProperty Name="cod_cap" ColumnName="cod_cap" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="conteudo_principal" ColumnName="conteudo_principal" />
+                <ScalarProperty Name="conteudo_secundario" ColumnName="conteudo_secundario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_topicos_img">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_topicos_img">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_topicos_img">
+                <ScalarProperty Name="cod_img" ColumnName="cod_img" />
+                <ScalarProperty Name="cod_topico" ColumnName="cod_topico" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="img" ColumnName="img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_IntDek_cd_usuarios">
+            <EntityTypeMapping TypeName="Integradesk_dbModel.tb_IntDek_cd_usuarios">
+              <MappingFragment StoreEntitySet="tb_IntDek_cd_usuarios">
+                <ScalarProperty Name="cod_usuario" ColumnName="cod_usuario" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
